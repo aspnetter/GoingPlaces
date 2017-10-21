@@ -1,0 +1,27 @@
+{
+  "name": "GoingPlaces",
+  "version": "1.0.0",
+  "description": "Full Stack Bleeding Edge",
+  "main": "site.js",
+  "author": "aspnetter@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "3.3.7",
+    "clean-webpack-plugin": "0.1.16",
+    "css-loader": "0.28.4",
+    "expose-loader": "0.7.3",
+    "extract-text-webpack-plugin": "3.0.0",
+    "file-loader": "1.1.5", 
+    "font-awesome": "4.7.0", 
+    "html-webpack-plugin": "2.30.1",
+    "jquery": "3.2.1",
+    "jquery-validation": "1.17.0",
+    "material-design-iconic-font":  "2.2.0", 
+    "merge-files-webpack-plugin": "^1.1.0",
+    "url-loader": "0.5.9",
+    "webpack": "3.5.5"
+  },
+  "scripts": { 
+    "buildProd": "webpack -p"
+  }
+}

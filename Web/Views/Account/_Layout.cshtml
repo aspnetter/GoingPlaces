@@ -1,0 +1,33 @@
+﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - GoingPlaces</title>
+
+    <link rel="shortcut icon" href="~/dist/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="@Url.Content("~/dist/styles/styles.bundle.css")" asp-append-version="true">
+</head>
+
+<body class="header-fixed">
+    <section class="section-account">
+        <div class="img-backdrop"></div>
+        <div class="spacer"></div>
+
+        @RenderBody()
+
+    </section>
+    <environment names="Development">
+        <script src="@Url.Content("~/dist/vendor.bundle.js")" asp-append-version="true"></script>
+        <script src="@Url.Content("~/dist/site.bundle.js")" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/dist/vendor.bundle.min.js" asp-append-version="true"></script>
+        <script src="~/dist/site.bundle.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("Scripts", false)
+</body>
+</html>

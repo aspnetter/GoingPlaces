@@ -1,0 +1,38 @@
+﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Going Places</title>
+
+    <link rel="stylesheet" href="@Url.Content("~/dist/styles/styles.bundle.css")" asp-append-version="true">
+
+    @Html.Raw(JavaScriptSnippet.FullScript)
+</head>
+
+
+
+    @await Html.PartialAsync("_SidebarMenuPartial")
+    
+  
+        @await Html.PartialAsync("_HeaderPartial")
+
+       
+                    @RenderBody()
+             
+        @await Html.PartialAsync("_FooterPartial")
+   
+
+    <environment names="Development">
+        <script src="@Url.Content("~/dist/vendor.bundle.js")" asp-append-version="true"></script>
+        <script src="@Url.Content("~/dist/site.bundle.js")" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/dist/vendor.bundle.min.js" asp-append-version="true"></script>
+        <script src="~/dist/site.bundle.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("Scripts", false)
+</body>
+</html>

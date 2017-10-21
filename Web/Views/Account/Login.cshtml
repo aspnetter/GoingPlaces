@@ -1,0 +1,54 @@
+@using Web.ViewModels.Authentication
+@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Login Page";
+    Layout = "_Layout.cshtml";
+}
+<form class="form form-validate" asp-action="Login">
+    <div class="card contain-xs">
+        <div class="card-head style-primary">
+            <header>Log in</header>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <input asp-for="LoginEmail" type="text" class="form-control" required />
+                <label asp-for="LoginEmail" class="text-bold text-caption"></label>
+            </div>
+            <div class="form-group">
+                <input asp-for="Password" type="password" class="form-control" required />
+                <label asp-for="Password" class="text-bold text-caption"></label>
+            </div>
+            <br />
+            <div class="form-group">
+                <div class="col-xs-6 text-left">
+                    <div class="checkbox checkbox-styled">
+                        <label>
+                            <input type="checkbox" asp-for="RememberMe">
+                            <span><label asp-for="RememberMe" class="text-caption text-default-light"></label></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-xs-6 text-right">
+                    <button class="btn btn-primary btn-raised btn-login" type="submit">Login</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-5 col-sm-offset-1 text-center">
+                    <br><br>
+                    <h3 class="text-light">
+                        No account yet?
+                    </h3>
+                    <a asp-action="SignUp" class="btn btn-block btn-raised btn-primary">Sign up here</a>
+                    <br><br>
+                    <h3 class="text-light">
+                        or
+                    </h3>
+                    <p>
+                        <a href="#" class="btn btn-block btn-raised btn-info"><i class="fa fa-facebook pull-left"></i>Login with Facebook</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
