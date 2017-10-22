@@ -1,4 +1,5 @@
-﻿using Data.Users;
+﻿using Data.Trips;
+using Data.Users;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -65,11 +66,13 @@ namespace Web
         {
             ConfigureAuthentication(services);
 
-            services.AddTransient<UserService, UserService>();
-            services.AddTransient<AuthService, AuthService>();
+            services.AddTransient<AccountService, AccountService>();
 
             services.AddDbContext<ApplicationUserContext>(
-                options => options.UseSqlServer(Configuration.GetConnectionString("SQLDatabase")));
+                options => options.UseSqlServer(Configuration.GetConnectionString("GoingPlaces")));
+
+            services.AddDbContext<TripContext>(
+                options => options.UseSqlServer(Configuration.GetConnectionString("GoingPlaces")));
 
             services.AddSession();
             services.AddMvc();
@@ -85,19 +88,14 @@ namespace Web
 
         private void ConfigureAuthentication(IServiceCollection services)
         {
-            var identityBuilder = services.AddIdentity<ApplicationUser, ApplicationRole>(
+            services.AddIdentity<ApplicationUser, ApplicationRole>(
                     identityOptions =>
                     {
                         identityOptions.Password.RequireDigit = false;
                         identityOptions.Password.RequireUppercase = false;
                         identityOptions.Password.RequireNonAlphanumeric = false;
-                        identityOptions.User.RequireUniqueEmail = true;
-                        identityOptions.SignIn.RequireConfirmedEmail = false;
-                        identityOptions.SignIn.RequireConfirmedPhoneNumber = true;
                     })
                 .AddEntityFrameworkStores<ApplicationUserContext>();
-
-
 
             services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationUserClaimsPrincipalFactory>();
         }

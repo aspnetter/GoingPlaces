@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Collections;
+using System.Collections.Generic;
+using Data.Trips;
+using Microsoft.AspNetCore.Identity;
 
 namespace Data.Users
 {
@@ -6,5 +9,7 @@ namespace Data.Users
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        public IEnumerable<Trip> Trips { get; set; }
     }
 }

@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using Web.ViewModels.Authentication;
@@ -7,10 +10,10 @@ namespace Web.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly AuthService _authService;
-        public AccountController(AuthService authService)
+        private readonly AccountService _accountService;
+        public AccountController(AccountService accountService)
         {
-            _authService = authService;
+            _accountService = accountService;
         }
 
         [HttpGet]
@@ -21,9 +24,14 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel viewModel)
+        public async Task<IActionResult> Login(LoginViewModel loginModel)
         {
-            var result = await _authService.PasswordSignInAsync(viewModel.LoginEmail, viewModel.Password);
+            if (!ModelState.IsValid)
+            {
+                return View(loginModel);
+            }
+
+            var result = await _accountService.PasswordSignInAsync(loginModel.LoginEmail, loginModel.Password, loginModel.RememberMe);
 
             if (!result.Succeeded)
             {
@@ -34,7 +42,15 @@ namespace Web.Controllers
             return Redirect("~/");
         }
 
-        public async Task<IActionResult> SignUp()
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _accountService.SignOutAsync();
+
+            return Redirect("~/");
+        }
+
+        public IActionResult SignUp()
         {
             return View();
         }
@@ -42,15 +58,32 @@ namespace Web.Controllers
         [HttpPost]
         public async Task<IActionResult> SignUp(SignUpViewModel signupUser)
         {
-            return View();
-        }
+            var userCreateResult = IdentityResult.Success;
 
-        [HttpPost]
-        public async Task<IActionResult> Logout()
-        {
-            await _authService.SignOutAsync();
+            if (ModelState.IsValid)
+            {
+                userCreateResult = await _accountService.SignUp(
+                    signupUser.LoginEmail,
+                    signupUser.FirstName,
+                    signupUser.LastName,
+                    signupUser.Password);
+            }
 
-            return Redirect("~/");
+            if (!userCreateResult.Succeeded)
+            {
+                ModelState.AddModelError(
+                    string.Empty,
+                    string.Join(". ", userCreateResult.Errors.Select(error => error.Description)));
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            TempData["FlashMessage"] = $"User '{signupUser.LoginEmail}' created successfully! You can now log in.";
+
+            return RedirectToAction("Login");
         }
     }
 }

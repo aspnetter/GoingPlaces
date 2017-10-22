@@ -4,25 +4,30 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Going Places</title>
+    <title>Going Places - @ViewData["Title"]</title>
 
     <link rel="stylesheet" href="@Url.Content("~/dist/styles/styles.bundle.css")" asp-append-version="true">
 
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 
+<body class="header-fixed menubar-pin">
 
-
-    @await Html.PartialAsync("_SidebarMenuPartial")
+    @*@await Html.PartialAsync("_SidebarMenuPartial")*@
+    @await Html.PartialAsync("_HeaderPartial")
     
-  
-        @await Html.PartialAsync("_HeaderPartial")
-
-       
-                    @RenderBody()
-             
-        @await Html.PartialAsync("_FooterPartial")
-   
+<div id="base">
+    <div class="offcanvas"></div>
+    <div id="content">
+        @RenderBody()
+    </div>
+    <div id="menubar">
+        ~ Menubar content goes here ~
+    </div>
+    <div class="offcanvas">
+        ~ Right off-canvas content goes here ~
+    </div>
+</div>
 
     <environment names="Development">
         <script src="@Url.Content("~/dist/vendor.bundle.js")" asp-append-version="true"></script>

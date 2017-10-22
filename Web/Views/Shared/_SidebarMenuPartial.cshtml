@@ -1,18 +1,18 @@
-﻿<nav class="page-sidebar" data-pages="sidebar">
-    <div class="sidebar-header"></div>
-    <div class="sidebar-menu">
-        <ul class="menu-items">
-            <li class="m-t-30 ">
-                <a asp-controller="Tenant" asp-action="List" class="detailed">
-                    <span class="title">Tenants</span>
-                </a>
-            </li>
-            <li class="">
-                <a asp-controller="User" asp-action="List" class="detailed">
-                    <span class="title">User Accounts</span>
-                </a>
-            </li>
-        </ul>
-        <div class="clearfix"></div>
-    </div>
-</nav>
+﻿<div class="menubar-scroll-panel">
+    <ul id="main-menu" class="gui-controls gui-controls-tree">
+        <li><small>DIVIDER</small></li>
+        <li>
+            <a href="#" class="active">
+                <div class="gui-icon"><i class="fa fa-home"></i></div>
+                <span class="title">Home</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <div class="gui-icon"><i class="fa fa-dashboard"></i></div>
+                <span class="title">Dashboard</span>
+            </a>
+        </li>
+        ...
+    </ul>
+</div>
