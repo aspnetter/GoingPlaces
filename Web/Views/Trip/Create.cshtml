@@ -1,10 +1,81 @@
-﻿@model object
+﻿@model Web.ViewModels.Trip.CreateEditTripViewModel
 
 @{
-    ViewBag.Title = "Add New Trip";
+    ViewBag.Title = "Add new trip";
     Layout = "_Layout";
 }
 
 
+<form class="form form-validate" asp-action="Create">
+    <div class="card">
+        <div class="card-body">
+            <div class="text-danger" asp-validation-summary="All"></div>
 
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group control-width-normal">
+                        <input type="text" asp-for="FromCountryCity" class="form-control" required>
+                        <label asp-for="FromCountryCity"></label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group control-width-normal">
+                        <input type="text" asp-for="ToCountryCity" class="form-control" required>
+                        <label asp-for="ToCountryCity"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group control-width-normal">
+                        <div class="input-group date">
+                            <div class="input-group-content">
+                                <input type="text"
+                                       asp-for="StartDate"
+                                       data-provide="datepicker"
+                                       data-date-format="mm/dd/yyyy"
+                                       data-start-date="+1d"
+                                       class="form-control"
+                                       required>
+                                <label asp-for="StartDate"></label>
+                            </div>
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group control-width-normal">
+                        <div class="input-group date">
+                            <div class="input-group-content">
+                                <input type="text"
+                                       asp-for="EndDate"
+                                       data-provide="datepicker"
+                                       data-date-format="mm/dd/yyyy"
+                                       data-start-date="+1d"
+                                       class="form-control"
+                                       required>
+                                <label asp-for="EndDate"></label>
+                            </div>
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <textarea asp-for="Comments" class="form-control"></textarea>
+                        <label asp-for="Comments"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="card-actionbar">
+                <div class="card-actionbar-row">
+                    <button type="submit" class="btn btn-success">Add to my list</button>
+                    <a class="btn btn-warning" href="@Url.Action("List", "Trip")">Back to list</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 

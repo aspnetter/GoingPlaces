@@ -3,6 +3,7 @@ var Webpack = require("webpack");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var MergeFilesPlugin = require("merge-files-webpack-plugin");
 var CleanWebpackPlugin = require("clean-webpack-plugin");
+var CopyWebpackPlugin = require("copy-webpack-plugin");
 
 var IsProduction = (process.env.NODE_ENV === 'production');
 
@@ -25,7 +26,13 @@ var CommonPlugins = [
         filename: "styles/styles.bundle.css",
         test: /\.css/, 
         deleteSourceFiles: true
-    })
+    }),
+    new CopyWebpackPlugin([
+        {
+            from: "../assets/images",
+            to: "assets/images"
+        }
+    ])
 ];
 
 var ProductionPlugins = [
@@ -55,7 +62,7 @@ var ProcessingRules = [
         use: ExtractTextPlugin.extract({ use: "css-loader?minimize" })
     },
     {
-        test: /\.(otf|eot|svg|ttf|woff|jpe?g|png|gif)/,
+        test: /\.(otf|eot|svg|ttf|woff|jpe?g|gif|png)/,
         use: [{ loader: "url-loader" }]
     },
     {

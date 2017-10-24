@@ -42,7 +42,7 @@ namespace Web.Controllers
             return Redirect("~/");
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await _accountService.SignOutAsync();

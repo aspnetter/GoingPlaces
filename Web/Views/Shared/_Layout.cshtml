@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Going Places - @ViewData["Title"]</title>
 
+    <link rel="shortcut icon" href="~/dist/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="@Url.Content("~/dist/styles/styles.bundle.css")" asp-append-version="true">
 
     @Html.Raw(JavaScriptSnippet.FullScript)
@@ -13,21 +14,40 @@
 
 <body class="header-fixed menubar-pin">
 
-    @*@await Html.PartialAsync("_SidebarMenuPartial")*@
     @await Html.PartialAsync("_HeaderPartial")
-    
-<div id="base">
-    <div class="offcanvas"></div>
-    <div id="content">
-        @RenderBody()
+
+    <div id="base">
+        <div class="offcanvas"></div>
+
+        <div id="content">
+            <section class="style-gray-bright clearfix">
+                <div class="section-body contain-lg">
+                    <div class="doc-section doc-lead">
+                        <h1 id="header-stucture" class="text-xxxl text-default-bright">@ViewData["Title"]</h1>
+                    </div>
+                </div>
+            </section>
+            @if (Html.TempData.ContainsKey("FlashMessage"))
+            {
+                <div class="alert alert-callout alert-success" role="alert">
+                    <strong>Well done!</strong>
+                    &nbsp;
+                    @Html.TempData["FlashMessage"]
+                </div>
+            }
+            <section>
+                <div class="section-body contain-lg">
+                    <div class="doc-section">
+                        @RenderBody()
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="menubar" class="menubar-inverse animate">
+            @await Html.PartialAsync("_SidebarMenuPartial")
+        </div>
     </div>
-    <div id="menubar">
-        ~ Menubar content goes here ~
-    </div>
-    <div class="offcanvas">
-        ~ Right off-canvas content goes here ~
-    </div>
-</div>
 
     <environment names="Development">
         <script src="@Url.Content("~/dist/vendor.bundle.js")" asp-append-version="true"></script>

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
 using Data.Users;
 using Microsoft.AspNetCore.Identity;
 
@@ -16,6 +17,8 @@ namespace Services
             _signInManager = signInManager;
             _userManager = userManager;
         }
+
+       
 
         public async Task<SignInResult> PasswordSignInAsync(string loginEmail, string password, bool persist)
         {
@@ -47,5 +50,9 @@ namespace Services
             return createResult;
         }
 
+        public async Task<ApplicationUser> GetUser(ClaimsPrincipal userPrincipal)
+        {
+            return await _userManager.GetUserAsync(userPrincipal);
+        }
     }
 }

@@ -1,8 +1,41 @@
-﻿@model object
+﻿@using Web.ViewModels.Trip
+@model TripListViewModel
 
 @{
-    ViewBag.Title = "My Trips";
+    ViewBag.Title = "All my trips";
     Layout = "_Layout";
 }
 
-
+<div class="card card-underline">
+    <div class="card-head">
+       @await Html.PartialAsync("_Filter", Model.Filter)
+    </div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Leave on</th>
+                    <th>Back on</th>
+                    <th>Duration, days</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var trip in Model.Trips)
+                {
+                    <tr>
+                        <td>@trip.Title</td>
+                        <td>@trip.StartDate</td>
+                        <td>@trip.EndDate</td>
+                        <td>@trip.DurationDays</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="card-actionbar">
+            <div class="card-actionbar-row">
+                <a class="btn btn-success" href="@Url.Action("Create", "Trip")">Add new</a>
+            </div>
+        </div>
+    </div>
+</div>

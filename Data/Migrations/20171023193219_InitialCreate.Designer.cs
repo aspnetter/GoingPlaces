@@ -11,7 +11,7 @@ using System;
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationUserContext))]
-    [Migration("20171022163641_InitialCreate")]
+    [Migration("20171023193219_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,37 @@ namespace Data.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Data.Trips.Trip", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("ApplicationUserId");
+
+                    b.Property<string>("Comments")
+                        .HasMaxLength(500);
+
+                    b.Property<DateTime>("EndDateUtc");
+
+                    b.Property<string>("From")
+                        .HasMaxLength(64);
+
+                    b.Property<DateTime>("StartDateUtc");
+
+                    b.Property<string>("Title");
+
+                    b.Property<string>("To")
+                        .HasMaxLength(64);
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("Trip");
+                });
 
             modelBuilder.Entity("Data.Users.ApplicationRole", b =>
                 {
@@ -42,7 +73,7 @@ namespace Data.Migrations
                         .HasName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("application_Roles");
+                    b.ToTable("AspNetRoles");
                 });
 
             modelBuilder.Entity("Data.Users.ApplicationUser", b =>
@@ -97,7 +128,7 @@ namespace Data.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("application_Users");
+                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -115,7 +146,7 @@ namespace Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("application_RoleClaims");
+                    b.ToTable("AspNetRoleClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
@@ -133,7 +164,7 @@ namespace Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("application_UserClaims");
+                    b.ToTable("AspNetUserClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
@@ -150,7 +181,7 @@ namespace Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("application_UserLogins");
+                    b.ToTable("AspNetUserLogins");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
@@ -163,7 +194,7 @@ namespace Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("application_UserRoles");
+                    b.ToTable("AspNetUserRoles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -178,7 +209,14 @@ namespace Data.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("application_UserTokens");
+                    b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Data.Trips.Trip", b =>
+                {
+                    b.HasOne("Data.Users.ApplicationUser")
+                        .WithMany("Trips")
+                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

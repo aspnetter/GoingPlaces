@@ -42,7 +42,6 @@ namespace Web
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-
                 app.UseRewriter(new RewriteOptions().AddRedirectToHttps());
             }
 
@@ -67,6 +66,7 @@ namespace Web
             ConfigureAuthentication(services);
 
             services.AddTransient<AccountService, AccountService>();
+            services.AddTransient<TripService, TripService>();
 
             services.AddDbContext<ApplicationUserContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("GoingPlaces")));

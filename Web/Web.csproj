@@ -13,10 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="assets\images\ava_default.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Controllers\AccountController.cs" />
     <Content Include="assets\css\site.css" />
-    <Content Include="assets\images\avatar.jpg" />
-    <Content Include="assets\images\avatar_small2x.jpg" />
     <Content Include="webpack.config.js" />
   </ItemGroup>
   <ItemGroup>
