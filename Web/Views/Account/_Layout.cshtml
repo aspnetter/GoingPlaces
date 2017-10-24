@@ -15,6 +15,15 @@
     <section class="section-account">
         <div class="img-backdrop"></div>
         <div class="spacer"></div>
+        
+        @if (Html.TempData.ContainsKey("FlashMessage"))
+        {
+            <div class="alert alert-callout alert-success" role="alert">
+                <strong>Well done!</strong>
+                &nbsp;
+                @Html.TempData["FlashMessage"]
+            </div>
+        }
 
         @RenderBody()
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using Services;
 
 namespace Web.ViewModels.Trip
 {
@@ -6,12 +7,10 @@ namespace Web.ViewModels.Trip
     {
         public FilterViewModel()
         {
-            DisplayType = TripDisplayType.Upcoming;
-            //DateFrom = DateTime.Now.Date; 
-            //DateTo = DateTime.Now.AddYears(1).Date;
+            FilterType = TripFilterType.Upcoming;
         }
 
-        public TripDisplayType DisplayType { get; set; }
+        public TripFilterType FilterType { get; set; }
         public DateTime? DateFrom { get; set; }
         public DateTime? DateTo { get; set; }
     }

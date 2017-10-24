@@ -34,10 +34,10 @@ namespace Web.ViewModels.Trip
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (StartDate < DateTime.Now)
-            {
-                yield return new ValidationResult("Trip start date cannot be in the past");
-            }
+            //if (StartDate < DateTime.Now)
+            //{
+            //    yield return new ValidationResult("Trip start date cannot be in the past");
+            //}
             if (EndDate < StartDate)
             {
                 yield return new ValidationResult("Return date cannot be earlier than start date");

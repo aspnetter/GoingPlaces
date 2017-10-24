@@ -18,6 +18,7 @@
                     <th>Leave on</th>
                     <th>Back on</th>
                     <th>Duration, days</th>
+                    <th>Notes</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +29,11 @@
                         <td>@trip.StartDate</td>
                         <td>@trip.EndDate</td>
                         <td>@trip.DurationDays</td>
+                        <td>
+                            <a href="#" 
+                               class="btn btn-tag text-overflow-hidden-ellipsis btn-tag-truncated" 
+                               title="@trip.Comments">@trip.Comments</a>
+                        </td>
                     </tr>
                 }
             </tbody>

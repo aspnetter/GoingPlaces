@@ -1,4 +1,5 @@
-﻿@using Web.ViewModels.Trip
+﻿@using Services
+@using Web.ViewModels.Trip
 @model FilterViewModel
 
 <form asp-action="Filter" method="get">
@@ -6,8 +7,8 @@
         <div class="col-sm-3 col-xs-12">
             <div class="form-group">
                 @Html.DropDownListFor(
-                    m => m.DisplayType, 
-                    Html.GetEnumSelectList(typeof(TripDisplayType)), 
+                    m => m.FilterType, 
+                    Html.GetEnumSelectList(typeof(TripFilterType)), 
                     new { @class = "form-control" })
             </div>
         </div>
@@ -18,7 +19,7 @@
                         <input type="text"
                                asp-for="DateFrom"
                                data-provide="datepicker"
-                               data-date-format="dd/mm/yyyy"
+                               data-date-format="mm/dd/yyyy"
                                class="form-control">
                         <label></label>
                     </div>
@@ -33,7 +34,7 @@
                         <input type="text"
                                asp-for="DateTo"
                                data-provide="datepicker"
-                               data-date-format="dd/mm/yyyy"
+                               data-date-format="mm/dd/yyyy"
                                class="form-control">
                         <label></label>
                     </div>

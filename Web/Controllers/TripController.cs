@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Data.Trips;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using Web.Authentication;
 using Web.ViewModels.Trip;
 
 namespace Web.Controllers
@@ -22,18 +22,16 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> List(TripDisplayType display, string startDate, string endDate)
+        public async Task<IActionResult> List()
         {
-            var trips = await _tripService.List();
+            var currentUserId = HttpContext.User.GetId();
+
             var tripsModel = new TripListViewModel
             {
-                Trips = trips.Select(t => new TripListEntryViewModel
-                {
-                    Title = $"{t.From} => {t.To}",
-                    StartDate = TimeZoneInfo.ConvertTimeFromUtc(t.StartDateUtc, TimeZoneInfo.Local).ToShortDateString(),
-                    EndDate = TimeZoneInfo.ConvertTimeFromUtc(t.EndDateUtc, TimeZoneInfo.Local).ToShortDateString(),
-                    DurationDays = (t.EndDateUtc - t.StartDateUtc).Days
-                })
+                Trips = (
+                await _tripService.ListTripsForUser(currentUserId))
+                .Select(t => new TripListEntryViewModel(t))
+                
             };
 
             return View(tripsModel);
@@ -42,16 +40,15 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Filter([FromQuery] FilterViewModel filter)
         {
-            var trips = await _tripService.List();
+            var trips = await _tripService.ListTripsForUser(
+                HttpContext.User.GetId(),
+                filter.FilterType,
+                filter.DateFrom?.ToUniversalTime(),
+                filter.DateTo?.ToUniversalTime());
+
             var tripsModel = new TripListViewModel
             {
-                Trips = trips.Select(t => new TripListEntryViewModel
-                {
-                    Title = $"{t.From} => {t.To}",
-                    StartDate = TimeZoneInfo.ConvertTimeFromUtc(t.StartDateUtc, TimeZoneInfo.Local).ToShortDateString(),
-                    EndDate = TimeZoneInfo.ConvertTimeFromUtc(t.EndDateUtc, TimeZoneInfo.Local).ToShortDateString(),
-                    DurationDays = (t.EndDateUtc - t.StartDateUtc).Days
-                }),
+                Trips = trips.Select(t => new TripListEntryViewModel(t)),           
                 Filter = filter
             };
 
